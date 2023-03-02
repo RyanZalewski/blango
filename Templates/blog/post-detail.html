@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load blog_extras %}
+{% load blog_extras crispy_forms_tags %}
 {% block content %}
 <h2>{{post.title}}</h2>
 {% row %}
@@ -12,6 +12,32 @@
       {{post.content|safe}}
     {% endcol%}
 {% endrow %}
+{% for comment in post.comments.all %}
+  {% row "border-top pt-2" %}
+    {% col %}
+      <h5> Posted by {{comment.creator}} at {{ comment.created_at|date:"M, d Y h:i"}}</h5>
+    {% endcol %}
+  {% endrow %}
+  {% row "border-bottom"%}
+    {% col %}
+      <p>{{comment.content}}</p>
+    {% endcol %}
+  {% endrow %}
+  {% empty %}
+    {% row "border-top border-bottom" %}
+      {% col %}
+        <p> No Comments </p>
+      {% endcol%}
+    {% endrow %}
+{% endfor %}
+{% if request.user.is_active %}
+{% row "mt-4" %}
+  {% col %}
+    <h4> Add a comment </h4>
+    {% crispy comment_form %}
+  {% endcol %}
+{% endrow %}
+{% endif %}
 {% row %}
     {% col %}
       {% recent_posts post %}
