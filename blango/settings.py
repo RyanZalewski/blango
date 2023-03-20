@@ -117,6 +117,12 @@ class Dev(Configuration):
       },
   ]
 
+  PASSWORD_HASHERS = [
+      'django.contrib.auth.hashers.Argon2PasswordHasher',
+      'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+      'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+      'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+  ]
 
   # Internationalization
   # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -142,9 +148,9 @@ class Dev(Configuration):
 
   DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-class Prod(Dev):
-  DEBUG = False
-  SECRET_KEY = values.SecretValue()
-  ALLOWED_HOSTS = values.ListValue(["localhost","0.0.0.0",".codio.io"])
-  DATABASES = values.DatabaseURLValue(f"sqlite:///{BASE_DIR}/db.sqlite3")
+#
+#class Prod(Dev):
+#  DEBUG = False
+#  SECRET_KEY = values.SecretValue()
+#  ALLOWED_HOSTS = values.ListValue(["localhost","0.0.0.0",".codio.io"])
+#  DATABASES = values.DatabaseURLValue(f"sqlite:///{BASE_DIR}/db.sqlite3")
